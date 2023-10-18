@@ -1,12 +1,12 @@
-import React, { useEffect, useReducer, useState } from "react";
-import Answers from "../Answers";
-import ProgressBar from "../ProgressBar";
-import MiniPlayer from "../MiniPlayer";
-import { useNavigate, useParams } from "react-router-dom";
-import useQuestions from "../../hooks/useQuestions";
-import _ from "lodash";
-import { useAuth } from "../../contexts/AuthContext";
 import { getDatabase, ref, set } from "firebase/database";
+import _ from "lodash";
+import React, { useEffect, useReducer, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import useQuestions from "../../hooks/useQuestions";
+import Answers from "../Answers";
+import MiniPlayer from "../MiniPlayer";
+import ProgressBar from "../ProgressBar";
 
 const initialState = null;
 
@@ -80,11 +80,7 @@ function Quiz() {
       [id]: qna,
     });
 
-    navigate(`/result/${id}`, {
-      state: {
-        qna,
-      },
-    });
+    navigate(`/result/${id}`, { state: qna });
   }
 
   //calculate progress
@@ -99,6 +95,7 @@ function Quiz() {
           <h1>{qna[currentQuestion].title}</h1>
           <h4>Question can have multiple answers</h4>
           <Answers
+            input
             options={qna[currentQuestion].options}
             handleChange={handleAnswerChange}
           />
@@ -108,7 +105,7 @@ function Quiz() {
             progress={percentage}
             submit={submit}
           />
-          <MiniPlayer />
+          <MiniPlayer id={id} title={qna[currentQuestion].title} />
         </>
       )}
     </>

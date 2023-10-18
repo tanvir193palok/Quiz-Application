@@ -17,8 +17,6 @@ function App() {
         <Layout>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<PublicRoute />}>
               <Route path="/signup" element={<Signup />} />
             </Route>
