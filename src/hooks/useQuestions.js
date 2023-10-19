@@ -1,31 +1,22 @@
+import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
 import { useEffect, useState } from "react";
-import {
-  get,
-  getDatabase,
-  orderByKey,
-  query,
-  ref,
-} from "firebase/database";
 
 function useQuestions(videoID) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [questions, setQuestions] = useState([]);
+
   useEffect(() => {
     async function fetchQuestions() {
-      //database related logics
+      // database related works
       const db = getDatabase();
-      const quizRef = ref(db, "quiz/"+ videoID+ "/questions"); //ref(name of database, node name)
-      const quizQuery = query(
-        quizRef,
-        orderByKey(),
-      );
+      const quizRef = ref(db, "quiz/" + videoID + "/questions");
+      const quizQuery = query(quizRef, orderByKey());
 
       try {
         setError(false);
         setLoading(true);
-
-        //request database
+        // request firebase database
         const snapshot = await get(quizQuery);
         setLoading(false);
         if (snapshot.exists()) {

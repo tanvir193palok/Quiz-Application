@@ -1,7 +1,7 @@
 import { getDatabase, ref, set } from "firebase/database";
 import _ from "lodash";
 import React, { useEffect, useReducer, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import useQuestions from "../../hooks/useQuestions";
 import Answers from "../Answers";
@@ -38,6 +38,7 @@ function Quiz() {
 
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const data = useLocation(); // Alternative of useHistory hook
 
   useEffect(() => {
     dispatch({
@@ -80,7 +81,7 @@ function Quiz() {
       [id]: qna,
     });
 
-    navigate(`/result/${id}`, { state: qna });
+    navigate(`/result/${id}`, { state: { qna } });
   }
 
   //calculate progress
@@ -105,7 +106,7 @@ function Quiz() {
             progress={percentage}
             submit={submit}
           />
-          <MiniPlayer id={id} title={qna[currentQuestion].title} />
+          <MiniPlayer id={id} title={data.state.videoTitle} />
         </>
       )}
     </>

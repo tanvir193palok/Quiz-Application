@@ -1,31 +1,22 @@
+import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
 import { useEffect, useState } from "react";
-import {
-  get,
-  getDatabase,
-  orderByKey,
-  query,
-  ref,
-} from "firebase/database";
 
-function useAnswers(videoID) {
+export default function useAnswers(videoID) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [answers, setAnswers] = useState([]);
+
   useEffect(() => {
     async function fetchAnswers() {
-      //database related logics
+      // database related works
       const db = getDatabase();
-      const answerRef = ref(db, "answers/"+ videoID+ "/questions"); //ref(name of database, node name)
-      const answerQuery = query(
-        answerRef,
-        orderByKey(),
-      );
+      const answerRef = ref(db, "answers/" + videoID + "/questions");
+      const answerQuery = query(answerRef, orderByKey());
 
       try {
         setError(false);
         setLoading(true);
-
-        //request database
+        // request firebase database
         const snapshot = await get(answerQuery);
         setLoading(false);
         if (snapshot.exists()) {
@@ -49,5 +40,3 @@ function useAnswers(videoID) {
     answers,
   };
 }
-
-export default useAnswers;

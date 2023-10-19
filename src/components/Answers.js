@@ -25,7 +25,7 @@ function Answers({ options = [], handleChange, input }) {
                   : option.checked
                   ? classes.wrong
                   : null
-              }`}
+              } `}
               text={option.title}
               defaultChecked={option.checked}
               disabled

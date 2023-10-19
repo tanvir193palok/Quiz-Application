@@ -9,8 +9,10 @@ function Result() {
   const { id } = useParams();
   const { state } = useLocation();
   const { qna } = state;
+  console.log(qna)
 
   const { loading, error, answers } = useAnswers(id);
+  console.log(answers)
 
   function calculate() {
     let score = 0;
@@ -35,12 +37,14 @@ function Result() {
     return score;
   }
 
+
   const userScore = calculate();
 
   return (
     <>
       {loading && <div>Loading...</div>}
-      {error && <div>Error occured!</div>}
+      {error && <div>There was an error!</div>}
+
       {answers && answers.length > 0 && (
         <>
           <Summary score={userScore} noq={answers.length} />
